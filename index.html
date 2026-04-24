@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--
+        SEGURIDAD - OWASP A05 (Security Misconfiguration)
+        Content Security Policy: limita orígenes permitidos para scripts/estilos.
+        Mitiga ataques de XSS reflejado al impedir scripts inline no autorizados.
+        Se permite Auth0 y Google Fonts solo donde es estrictamente necesario.
+    -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';
+                   script-src 'self' https://cdn.auth0.com 'unsafe-inline';
+                   style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+                   font-src 'self' https://fonts.gstatic.com;
+                   img-src 'self' data: https:;
+                   connect-src 'self' https://*.auth0.com;
+                   frame-src https://*.auth0.com;">
+
+    <!-- SEGURIDAD - Otros headers defensivos -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+
+    <meta name="description" content="SportyStyle - Ropa deportiva de alta calidad para personas activas">
+    <meta name="author" content="SportyStyle">
+
+    <title>SportyStyle | Ropa deportiva premium</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- ========================================================
+         HEADER SEMÁNTICO con navegación principal
+         ======================================================== -->
+    <header class="site-header" role="banner">
+        <div class="header-inner">
+            <a href="#" class="logo" aria-label="SportyStyle inicio">
+                <span class="logo-mark">SS</span>
+                <span class="logo-text">SportyStyle</span>
+            </a>
+
+            <nav class="main-nav" role="navigation" aria-label="Navegación principal">
+                <ul>
+                    <li><a href="#productos">Tienda</a></li>
+                    <li><a href="#camisetas">Camisetas</a></li>
+                    <li><a href="#pantalones">Pantalones</a></li>
+                    <li><a href="#accesorios">Accesorios</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <!-- Saludo dinámico tras autenticarse -->
+                <span id="welcome-message" class="welcome-msg" hidden></span>
+
+                <button id="btn-login" class="btn btn-outline" type="button" aria-label="Iniciar sesión con Auth0">
+                    Ingresar
+                </button>
+                <button id="btn-logout" class="btn btn-outline" type="button" hidden aria-label="Cerrar sesión">
+                    Salir
+                </button>
+
+                <button id="btn-cart-toggle" class="btn btn-cart" type="button" aria-label="Abrir carrito de compras" aria-expanded="false">
+                    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                        <path fill="currentColor" d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM1 2v2h2l3.6 7.6L4.2 16H19v-2H7.4l1.1-2H17a2 2 0 0 0 1.8-1.1L22.7 4H5.2L4.3 2z"/>
+                    </svg>
+                    <span class="cart-count" id="cart-count" aria-live="polite">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================================
+         MAIN: contenido principal
+         ======================================================== -->
+    <main id="main">
+
+        <!-- HERO -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <p class="hero-eyebrow">Colección 2026</p>
+                <h1 id="hero-title" class="hero-title">
+                    ENTRENA<br>
+                    <span class="accent">SIN LÍMITES</span>
+                </h1>
+                <p class="hero-sub">Ropa deportiva diseñada para los que no se rinden. Calidad premium, estilo urbano.</p>
+                <a href="#productos" class="btn btn-primary">Explorar tienda</a>
+            </div>
+            <div class="hero-deco" aria-hidden="true">
+                <div class="hero-circle"></div>
+                <div class="hero-grid"></div>
+            </div>
+        </section>
+
+        <!-- CATÁLOGO DE PRODUCTOS -->
+        <section id="productos" class="catalog" aria-labelledby="catalog-title">
+            <header class="section-header">
+                <h2 id="catalog-title">Catálogo</h2>
+                <p>Selecciona tus favoritos y agrégalos al carrito.</p>
+            </header>
+
+            <!-- CAMISETAS -->
+            <section id="camisetas" class="product-category" aria-labelledby="cat-camisetas">
+                <h3 id="cat-camisetas" class="category-title"><span class="cat-num">01</span> Camisetas deportivas</h3>
+                <div class="product-grid" id="grid-camisetas" role="list">
+                    <!-- Productos inyectados por JS -->
+                </div>
+            </section>
+
+            <!-- PANTALONES -->
+            <section id="pantalones" class="product-category" aria-labelledby="cat-pantalones">
+                <h3 id="cat-pantalones" class="category-title"><span class="cat-num">02</span> Pantalones deportivos</h3>
+                <div class="product-grid" id="grid-pantalones" role="list">
+                    <!-- Productos inyectados por JS -->
+                </div>
+            </section>
+
+            <!-- ACCESORIOS -->
+            <section id="accesorios" class="product-category" aria-labelledby="cat-accesorios">
+                <h3 id="cat-accesorios" class="category-title"><span class="cat-num">03</span> Accesorios</h3>
+                <div class="product-grid" id="grid-accesorios" role="list">
+                    <!-- Productos inyectados por JS -->
+                </div>
+            </section>
+        </section>
+
+        <!-- FORMULARIO DE PAGO -->
+        <section id="checkout" class="checkout" aria-labelledby="checkout-title" hidden>
+            <header class="section-header">
+                <h2 id="checkout-title">Checkout</h2>
+                <p>Completa tus datos para finalizar la compra.</p>
+            </header>
+
+            <form id="form-checkout" class="form-checkout" novalidate aria-describedby="form-help">
+                <p id="form-help" class="form-help">Todos los campos son obligatorios. Validamos tus datos antes de procesar la compra.</p>
+
+                <!-- DATOS PERSONALES -->
+                <fieldset class="form-fieldset">
+                    <legend>Datos personales</legend>
+
+                    <div class="form-row">
+                        <label for="nombre">Nombre completo</label>
+                        <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            required
+                            minlength="3"
+                            maxlength="80"
+                            pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+                            autocomplete="name"
+                            aria-describedby="err-nombre"
+                            placeholder="Ej: Juan Pérez">
+                        <small class="error-msg" id="err-nombre" role="alert"></small>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="email">Correo electrónico</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            maxlength="120"
+                            autocomplete="email"
+                            aria-describedby="err-email"
+                            placeholder="tu@correo.com">
+                        <small class="error-msg" id="err-email" role="alert"></small>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="telefono">Teléfono</label>
+                        <input
+                            type="tel"
+                            id="telefono"
+                            name="telefono"
+                            required
+                            pattern="^[0-9]{8,12}$"
+                            autocomplete="tel"
+                            aria-describedby="err-telefono help-telefono"
+                            placeholder="912345678">
+                        <small id="help-telefono" class="form-hint">Solo números, entre 8 y 12 dígitos.</small>
+                        <small class="error-msg" id="err-telefono" role="alert"></small>
+                    </div>
+                </fieldset>
+
+                <!-- DATOS DE ENVÍO -->
+                <fieldset class="form-fieldset">
+                    <legend>Datos de envío</legend>
+
+                    <div class="form-row">
+                        <label for="direccion">Dirección de envío</label>
+                        <input
+                            type="text"
+                            id="direccion"
+                            name="direccion"
+                            required
+                            minlength="5"
+                            maxlength="120"
+                            autocomplete="street-address"
+                            aria-describedby="err-direccion"
+                            placeholder="Calle, número, comuna, ciudad">
+                        <small class="error-msg" id="err-direccion" role="alert"></small>
+                    </div>
+                </fieldset>
+
+                <div class="form-actions">
+                    <button type="button" id="btn-back-shop" class="btn btn-outline">← Volver a la tienda</button>
+                    <button type="submit" class="btn btn-primary">Confirmar compra</button>
+                </div>
+
+                <p id="form-global-error" class="form-global-error" role="alert" hidden></p>
+            </form>
+        </section>
+
+        <!-- CONFIRMACIÓN -->
+        <section id="confirmation" class="confirmation" aria-labelledby="confirm-title" hidden>
+            <article class="confirm-card">
+                <div class="confirm-icon" aria-hidden="true">✓</div>
+                <h2 id="confirm-title">¡Gracias por tu compra!</h2>
+                <p id="confirm-name"></p>
+                <p>Hemos recibido tu pedido y lo enviaremos a la dirección indicada.</p>
+
+                <h3>Detalle del pedido</h3>
+                <div class="confirm-detail" id="confirm-detail" role="region" aria-label="Detalle del pedido"></div>
+
+                <button type="button" id="btn-new-order" class="btn btn-primary">Realizar otra compra</button>
+            </article>
+        </section>
+    </main>
+
+    <!-- ========================================================
+         CARRITO LATERAL (aside semántico)
+         ======================================================== -->
+    <aside id="cart-drawer" class="cart-drawer" aria-labelledby="cart-title" aria-hidden="true">
+        <header class="cart-header">
+            <h2 id="cart-title">Tu carrito</h2>
+            <button type="button" id="btn-cart-close" class="btn-icon" aria-label="Cerrar carrito">×</button>
+        </header>
+
+        <div class="cart-body" id="cart-body" role="region" aria-live="polite">
+            <p class="cart-empty">Tu carrito está vacío.</p>
+        </div>
+
+        <footer class="cart-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <strong id="cart-total">$0</strong>
+            </div>
+            <button type="button" id="btn-checkout" class="btn btn-primary btn-block" disabled>Pagar</button>
+            <button type="button" id="btn-clear-cart" class="btn btn-ghost btn-block">Vaciar carrito</button>
+            <p id="cart-auth-hint" class="cart-hint">Debes iniciar sesión para pagar.</p>
+        </footer>
+    </aside>
+
+    <!-- Overlay del carrito -->
+    <div id="cart-overlay" class="cart-overlay" hidden></div>
+
+    <!-- ========================================================
+         FOOTER
+         ======================================================== -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-inner">
+            <p class="footer-brand">SPORTYSTYLE</p>
+            <p class="footer-text">© 2026 SportyStyle. Proyecto académico — Taller de Plataformas Web · AIEP.</p>
+            <p class="footer-text">Implementación segura con Auth0, Session Storage y validaciones OWASP Top 10.</p>
+        </div>
+    </footer>
+
+    <!-- ========================================================
+         NOTIFICACIONES (toasts)
+         ======================================================== -->
+    <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+    <!-- ========================================================
+         SCRIPTS
+         Auth0 SDK desde CDN oficial. Carga diferida.
+         ======================================================== -->
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
+
+    <!-- Módulos JS propios. Orden importa -->
+    <script src="js/config.js" defer></script>
+    <script src="js/security.js" defer></script>
+    <script src="js/products.js" defer></script>
+    <script src="js/cart.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/checkout.js" defer></script>
+    <script src="js/app.js" defer></script>
+</body>
+</html>
