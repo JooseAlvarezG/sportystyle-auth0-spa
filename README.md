@@ -55,21 +55,6 @@ Al cerrar sesión:
 2. El SDK invalida la sesión en los servidores de Auth0 y elimina el token del `localStorage`.
 3. El usuario es redirigido de vuelta a la app sin sesión activa.
 
-### Diagrama resumido
-
-```
-Usuario          App (auth.js)          Auth0
-  |                   |                    |
-  |-- click Login --> |                    |
-  |                   |-- loginWithRedirect -->|
-  |                   |                    |-- muestra formulario
-  |<-------------- redirige con ?code=... --|
-  |                   |-- handleRedirectCallback()
-  |                   |   (SDK intercambia code por tokens)
-  |                   |-- getUser() --> perfil
-  |<-- saludo "Hola, [nombre]" ------------|
-```
-
 ---
 
 ## 2. Proceso de selección de productos y carrito
