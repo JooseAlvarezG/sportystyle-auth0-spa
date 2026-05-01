@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +11,7 @@
         Mitiga ataques de XSS reflejado al impedir scripts inline no autorizados.
         Se permite Auth0 y Google Fonts solo donde es estrictamente necesario.
     -->
-    <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self';
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self';
                    script-src 'self' https://cdn.auth0.com 'unsafe-inline';
                    style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
                    font-src 'self' https://fonts.gstatic.com;
@@ -30,50 +30,78 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
 
     <!-- ========================================================
          HEADER SEMÁNTICO con navegación principal
          ======================================================== -->
     <header class="site-header" role="banner">
-        <div class="header-inner">
-            <a href="#" class="logo" aria-label="SportyStyle inicio">
-                <span class="logo-mark">SS</span>
-                <span class="logo-text">SportyStyle</span>
-            </a>
 
-            <nav class="main-nav" role="navigation" aria-label="Navegación principal">
-                <ul>
-                    <li><a href="#productos">Tienda</a></li>
-                    <li><a href="#camisetas">Camisetas</a></li>
-                    <li><a href="#pantalones">Pantalones</a></li>
-                    <li><a href="#accesorios">Accesorios</a></li>
-                </ul>
-            </nav>
-
-            <div class="header-actions">
-                <!-- Saludo dinámico tras autenticarse -->
+        <!-- Barra superior de utilidades -->
+        <div class="header-topbar">
+            <div class="topbar-inner">
                 <span id="welcome-message" class="welcome-msg" hidden></span>
-
-                <button id="btn-login" class="btn btn-outline" type="button" aria-label="Iniciar sesión con Auth0">
-                    Ingresar
+                <button id="btn-login" class="btn btn-link" type="button" aria-label="Iniciar sesión con Auth0">
+                    Registrate / Ingresar
                 </button>
-                <button id="btn-logout" class="btn btn-outline" type="button" hidden aria-label="Cerrar sesión">
+                <button id="btn-logout" class="btn btn-link" type="button" hidden aria-label="Cerrar sesión">
                     Salir
-                </button>
-
-                <button id="btn-cart-toggle" class="btn btn-cart" type="button" aria-label="Abrir carrito de compras" aria-expanded="false">
-                    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-                        <path fill="currentColor" d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM1 2v2h2l3.6 7.6L4.2 16H19v-2H7.4l1.1-2H17a2 2 0 0 0 1.8-1.1L22.7 4H5.2L4.3 2z"/>
-                    </svg>
-                    <span class="cart-count" id="cart-count" aria-live="polite">0</span>
                 </button>
             </div>
         </div>
+
+        <!-- Navegación principal -->
+        <div class="header-main">
+            <div class="header-inner">
+                <a href="#" class="logo" aria-label="SportyStyle inicio">
+                    <span class="logo-mark">
+                        <img src="img/logo.png" alt="SportyStyle logo" class="logo-img"
+                             width="28" height="28"
+                             onerror="this.style.display='none'; this.nextElementSibling.hidden=false; this.parentElement.classList.add('logo-mark--fallback');">
+                        <span hidden>SS</span>
+                    </span>
+                    <span class="logo-text">SportyStyle</span>
+                </a>
+
+                <nav class="main-nav" role="navigation" aria-label="Navegación principal">
+                    <ul>
+                        <li><a href="#camisetas">Camisetas</a></li>
+                        <li><a href="#pantalones">Pantalones</a></li>
+                        <li><a href="#accesorios">Accesorios</a></li>
+                    </ul>
+                </nav>
+
+                <div class="header-actions">
+                    <div class="search-wrap" role="search">
+                        <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <input type="search" class="search-input" placeholder="Buscar"
+                            aria-label="Buscar productos" />
+                    </div>
+
+                    <button id="btn-cart-toggle" class="btn btn-cart" type="button"
+                        aria-label="Abrir carrito de compras" aria-expanded="false">
+                        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                            <path fill="currentColor"
+                                d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM1 2v2h2l3.6 7.6L4.2 16H19v-2H7.4l1.1-2H17a2 2 0 0 0 1.8-1.1L22.7 4H5.2L4.3 2z" />
+                        </svg>
+                        <span class="cart-count" id="cart-count" aria-live="polite">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </header>
 
     <!-- ========================================================
@@ -89,13 +117,11 @@
                     ENTRENA<br>
                     <span class="accent">SIN LÍMITES</span>
                 </h1>
-                <p class="hero-sub">Ropa deportiva diseñada para los que no se rinden. Calidad premium, estilo urbano.</p>
+                <p class="hero-sub">Ropa deportiva diseñada para los que no se rinden. Calidad premium, estilo urbano.
+                </p>
                 <a href="#productos" class="btn btn-primary">Explorar tienda</a>
             </div>
-            <div class="hero-deco" aria-hidden="true">
-                <div class="hero-circle"></div>
-                <div class="hero-grid"></div>
-            </div>
+
         </section>
 
         <!-- CATÁLOGO DE PRODUCTOS -->
@@ -115,7 +141,8 @@
 
             <!-- PANTALONES -->
             <section id="pantalones" class="product-category" aria-labelledby="cat-pantalones">
-                <h3 id="cat-pantalones" class="category-title"><span class="cat-num">02</span> Pantalones deportivos</h3>
+                <h3 id="cat-pantalones" class="category-title"><span class="cat-num">02</span> Pantalones deportivos
+                </h3>
                 <div class="product-grid" id="grid-pantalones" role="list">
                     <!-- Productos inyectados por JS -->
                 </div>
@@ -138,7 +165,8 @@
             </header>
 
             <form id="form-checkout" class="form-checkout" novalidate aria-describedby="form-help">
-                <p id="form-help" class="form-help">Todos los campos son obligatorios. Validamos tus datos antes de procesar la compra.</p>
+                <p id="form-help" class="form-help">Todos los campos son obligatorios. Validamos tus datos antes de
+                    procesar la compra.</p>
 
                 <!-- DATOS PERSONALES -->
                 <fieldset class="form-fieldset">
@@ -146,45 +174,23 @@
 
                     <div class="form-row">
                         <label for="nombre">Nombre completo</label>
-                        <input
-                            type="text"
-                            id="nombre"
-                            name="nombre"
-                            required
-                            minlength="3"
-                            maxlength="80"
-                            pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
-                            autocomplete="name"
-                            aria-describedby="err-nombre"
+                        <input type="text" id="nombre" name="nombre" required minlength="3" maxlength="80"
+                            pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" autocomplete="name" aria-describedby="err-nombre"
                             placeholder="Ej: Juan Pérez">
                         <small class="error-msg" id="err-nombre" role="alert"></small>
                     </div>
 
                     <div class="form-row">
                         <label for="email">Correo electrónico</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            required
-                            maxlength="120"
-                            autocomplete="email"
-                            aria-describedby="err-email"
-                            placeholder="tu@correo.com">
+                        <input type="email" id="email" name="email" required maxlength="120" autocomplete="email"
+                            aria-describedby="err-email" placeholder="tu@correo.com">
                         <small class="error-msg" id="err-email" role="alert"></small>
                     </div>
 
                     <div class="form-row">
                         <label for="telefono">Teléfono</label>
-                        <input
-                            type="tel"
-                            id="telefono"
-                            name="telefono"
-                            required
-                            pattern="^[0-9]{8,12}$"
-                            autocomplete="tel"
-                            aria-describedby="err-telefono help-telefono"
-                            placeholder="912345678">
+                        <input type="tel" id="telefono" name="telefono" required pattern="^[0-9]{8,12}$"
+                            autocomplete="tel" aria-describedby="err-telefono help-telefono" placeholder="912345678">
                         <small id="help-telefono" class="form-hint">Solo números, entre 8 y 12 dígitos.</small>
                         <small class="error-msg" id="err-telefono" role="alert"></small>
                     </div>
@@ -196,15 +202,8 @@
 
                     <div class="form-row">
                         <label for="direccion">Dirección de envío</label>
-                        <input
-                            type="text"
-                            id="direccion"
-                            name="direccion"
-                            required
-                            minlength="5"
-                            maxlength="120"
-                            autocomplete="street-address"
-                            aria-describedby="err-direccion"
+                        <input type="text" id="direccion" name="direccion" required minlength="5" maxlength="120"
+                            autocomplete="street-address" aria-describedby="err-direccion"
                             placeholder="Calle, número, comuna, ciudad">
                         <small class="error-msg" id="err-direccion" role="alert"></small>
                     </div>
@@ -222,7 +221,12 @@
         <!-- CONFIRMACIÓN -->
         <section id="confirmation" class="confirmation" aria-labelledby="confirm-title" hidden>
             <article class="confirm-card">
-                <div class="confirm-icon" aria-hidden="true">✓</div>
+                <!-- Icono de confirmacion: SVG en lugar de caracter Unicode -->
+                <div class="confirm-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
                 <h2 id="confirm-title">¡Gracias por tu compra!</h2>
                 <p id="confirm-name"></p>
                 <p>Hemos recibido tu pedido y lo enviaremos a la dirección indicada.</p>
@@ -293,4 +297,5 @@
     <script src="js/checkout.js" defer></script>
     <script src="js/app.js" defer></script>
 </body>
+
 </html>
